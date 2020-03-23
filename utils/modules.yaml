@@ -1,0 +1,7 @@
+modules:
+ - chorus
+ - flanger
+ - delay
+ - phaser
+ - overdrv
+ - reverb

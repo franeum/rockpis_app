@@ -1,0 +1,58 @@
+{
+  "audioin": {
+    "name": "audio-in",
+    "image": "./images/svg/modules/audioin.svg",
+    "image_selected": "./images/svg/modules/audioin.svg",
+    "image_menu": "./images/svg/modules/audioin_menu.svg",
+    "last": false
+  },
+  "audioout": {
+    "name": "audio-out",
+    "image": "./images/svg/modules/audioout.svg",
+    "image_selected": "./images/svg/modules/audioout.svg",
+    "image_menu": "./images/svg/modules/audioout_menu.svg",
+    "last": true
+  },
+  "chorus": {
+    "name": "chorus",
+    "image": "./images/svg/modules/chorus.svg",
+    "image_selected": "./images/svg/modules/chorus_selected.svg",
+    "image_menu": "./images/svg/modules/chorus_menu.svg",
+    "last": false
+  },
+  "delay": {
+    "name": "delay",
+    "image": "./images/svg/modules/delay.svg",
+    "image_selected": "./images/svg/modules/delay_selected.svg",
+    "image_menu": "./images/svg/modules/delay_menu.svg",
+    "last": false
+  },
+  "flanger": {
+    "name": "flanger",
+    "image": "./images/svg/modules/flanger.svg",
+    "image_selected": "./images/svg/modules/flanger_selected.svg",
+    "image_menu": "./images/svg/modules/flanger_menu.svg",
+    "last": false
+  },
+  "overdrv": {
+    "name": "overdrv",
+    "image": "./images/svg/modules/overdrv.svg",
+    "image_selected": "./images/svg/modules/overdrv_selected.svg",
+    "image_menu": "./images/svg/modules/overdrv_menu.svg",
+    "last": false
+  },
+  "phaser": {
+    "name": "phaser",
+    "image": "./images/svg/modules/phaser.svg",
+    "image_selected": "./images/svg/modules/phaser_selected.svg",
+    "image_menu": "./images/svg/modules/phaser_menu.svg",
+    "last": false
+  },
+  "reverb": {
+    "name": "reverb",
+    "image": "./images/svg/modules/reverb.svg",
+    "image_selected": "./images/svg/modules/reverb_selected.svg",
+    "image_menu": "./images/svg/modules/reverb_menu.svg",
+    "last": false
+  }
+}
