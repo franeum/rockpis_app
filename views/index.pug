@@ -17,7 +17,7 @@ block content
       .col-md-9(id="main-container")  
         #the-network.container-fluid
       .col-md-3
-        #the-controller.container-fluid 
+        #the-controller(style='height: 100%; overflow-y: scroll;') 
     .row 
       .col-md-6 
         button.btn.btn-block.btn-lg(class=outline type="button") Render puredata patch
@@ -26,12 +26,10 @@ block content
 
     script(src="js/scripts.js")
     script(src="js/module_menu_builder.js")
-    //script(src="js/network_manager.js")
-    script(src="js/jquery-ui.js")
+    script(src="js/network_manager.js")
     script. 
       $(document).ready(() => {
         let modules = !{ JSON.stringify(modules) }
         render(modules)
         create_module_list(modules)
-        //network_init()
       })
