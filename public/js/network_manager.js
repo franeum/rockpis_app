@@ -11,55 +11,7 @@ let cy_content = {
   elements: [ // list of graph elements to start with
     // nodes and edges
   ],
-  style: [ // the stylesheet for the graph 
-    {
-      selector: 'node',
-      style: {
-        'shape': 'ellipse',
-        'width': 100,
-        'height': 100,
-        'background-color': '#FF8800',
-        'ghost': 'no',
-        'ghost-opacity': 0.1,
-        'ghost-offset-x': '3px',
-        'ghost-offset-y': '3px',
-        'label': 'data(label)',
-        'color': '#ffffff',
-        'font-family': 'arial',
-        "font-size": "1.25em",
-        "text-valign": "center",
-        "text-halign": "center"
-      }
-    },
-    {
-      selector: '.selectedClass',
-      style: {
-        'shape': 'ellipse',
-        'width': 100,
-        'height': 100,
-        'background-color': '#00ccff',
-        'ghost': 'no',
-        'ghost-opacity': 0.1,
-        'ghost-offset-x': '3px',
-        'ghost-offset-y': '3px',
-        'label': 'data(label)',
-        'color': '#ffffff',
-        'font-family': 'arial',
-        "font-size": "1.25em",
-        "text-valign": "center",
-        "text-halign": "center"
-      }
-    },
-    {
-      selector: 'edge',
-      style: {
-        'width': 2,
-        'line-color': '#000000',
-        'target-arrow-color': '#666',
-        'target-arrow-shape': 'triangle'
-      }
-    }
-  ],
+  style: cy_style,
   layout: {
     name: 'grid'
     //rows: 1
@@ -100,14 +52,14 @@ cy.on('cxttap', (event) => {
 })
 
 
-// SELECTION
+// NODE SELECTION
 
 cy.on('select', 'node', (event) => {
   console.log("select event")
 
   let id_selected = event.target._private.data.id
   
-  cy.$('#' + id_selected).classes('selectedClass')
+  cy.$('#' + id_selected).classes('nodeSelectedClass')
   if (selected_node_id === null) {
     selected_node_id = id_selected
   } else {
@@ -115,6 +67,26 @@ cy.on('select', 'node', (event) => {
     create_edge(selected_node_id, id_selected)
     selected_node_id = id_selected 
   }
+})
+
+
+// EDGE SELECTION
+
+cy.on('select', 'edge', (event) => {
+  console.log("edge select event", event)
+
+  let id_selected = event.target._private.data.id
+  console.log(id_selected)
+  cy.$('#' + id_selected).classes('edgeSelectedClass')
+  /*
+  if (selected_node_id === null) {
+    selected_node_id = id_selected
+  } else {
+    console.log("create edge?")
+    create_edge(selected_node_id, id_selected)
+    selected_node_id = id_selected 
+  }
+  */
 })
 
 
@@ -129,6 +101,19 @@ cy.on('unselect', 'node', (event) => {
 })
 
 
+cy.on('unselect', 'edge', (event) => {
+  console.log("unselect edge event")
+  //console.log(event)
+  let n = event.target._private.data.id
+  cy.$('#' + n).classes('edges')
+  //selected_node_id = null 
+})
+
+
+
+Mousetrap.bind("ctrl+x", function() { 
+  console.log('show shortcuts X')
+});
 
 
 let create_module_list = (array) => {

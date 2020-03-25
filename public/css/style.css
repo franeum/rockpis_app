@@ -1,10 +1,10 @@
 [class*="col-md-"] {
-    padding: 1%;
+    padding: 0.5em;
     box-sizing: border-box;
 }
 
 .row {
-    margin: 1%;
+    margin: 0.5%;
     box-sizing: border-box;
 }
 
