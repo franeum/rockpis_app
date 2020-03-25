@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  - let outline = "btn-outline-warning"
+  .container-fluid 
+    .row
+      .col-md-6
+        div.dropdown
+          button.btn.btn-lg.btn-block.dropdown-toggle(class=outline type="button", id="dropdownMenuButton", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Choose Module 
+          div.dropdown-menu.w-100(id="module-menu", role="menu", aria-labelledby="dropdownMenuButton") 
+      .col-md-3
+          button.btn.btn-block.btn-lg(class=outline type="button" onclick="network_clear()") Clear
+      .col-md-3
+          button.btn.btn-block.btn-lg(class=outline type="button") Render 
+
+    .row 
+      .col-md-9#main-container  
+        #the-network.container-fluid
+      .col-md-3#main-container
+        #the-controller
+    .row 
+      .col-md-6 
+        button.btn.btn-block.btn-lg(class=outline type="button") Render puredata patch
+      .col-md-6
+        button.btn.btn-block.btn-lg(class=outline type="button") Send patch to Rockpis
+
+    script(src="js/scripts.js")
+    script(src="js/module_menu_builder.js")
+    script(src="js/network_manager.js")
+    script. 
+      $(document).ready(() => {
+        let modules = !{ JSON.stringify(modules) }
+        render(modules)
+        create_module_list(modules)
+      })
