@@ -1,3 +1,8 @@
+html {
+    cursor: default;
+}
+
+
 [class*="col-md-"] {
     padding: 0.5em;
     box-sizing: border-box;

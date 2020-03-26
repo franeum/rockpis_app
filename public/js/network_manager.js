@@ -3,7 +3,17 @@
 
 let module_list = {}
 let counter_id = 0
+let editmode = false  
 let selected_node_id = null 
+
+
+
+let module_node = {
+  label: 'name'
+}
+
+
+
 
 let cy_content = {
 
@@ -20,6 +30,57 @@ let cy_content = {
 
 
 let cy = cytoscape(cy_content);
+
+cy.cxtmenu({
+  menuRadius: 250,
+  separatorWidth: 10,
+  minSpotlightRadius: 48,
+  selector: 'node, edge',
+  commands: [
+    {
+      content: '<span class="fa fa-flash fa-2x"></span>',
+      select: function(ele){
+        console.log( ele.id() );
+      }
+    },
+    {
+      content: '<span class="fa fa-star fa-2x"></span>',
+      select: function(ele){
+        console.log( ele.data('name') );
+      }//,
+      //enabled: false
+    },
+    {
+      content: 'chorus',
+      select: function(ele){
+        console.log( ele.position() );
+      }
+    },
+    {
+      content: 'sto cazzo',
+      select: function(ele){
+        //console.log( ele.position() );
+        coord = ele.position()
+        create_node('tastooma', coord.x + 100, coord.y + 100)
+      }
+    }
+  ]
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 let network_clear = () => {
@@ -38,8 +99,10 @@ let network_clear = () => {
 
 cy.on('tap', (event) => {
   let data = event.target 
-  if (data === cy) {
+  if ((data === cy) && (editmode)) {
     selected_node_id = null 
+    create_node(event.position.x, event.position.y)
+    //console.log(event.position)
   }
 })
 
@@ -55,9 +118,10 @@ cy.on('cxttap', (event) => {
 // NODE SELECTION
 
 cy.on('select', 'node', (event) => {
-  console.log("select event")
+  console.log("select node event")
 
   let id_selected = event.target._private.data.id
+  console.log(id_selected)
   
   cy.$('#' + id_selected).classes('nodeSelectedClass')
   if (selected_node_id === null) {
@@ -67,6 +131,7 @@ cy.on('select', 'node', (event) => {
     create_edge(selected_node_id, id_selected)
     selected_node_id = id_selected 
   }
+  
 })
 
 
@@ -78,15 +143,6 @@ cy.on('select', 'edge', (event) => {
   let id_selected = event.target._private.data.id
   console.log(id_selected)
   cy.$('#' + id_selected).classes('edgeSelectedClass')
-  /*
-  if (selected_node_id === null) {
-    selected_node_id = id_selected
-  } else {
-    console.log("create edge?")
-    create_edge(selected_node_id, id_selected)
-    selected_node_id = id_selected 
-  }
-  */
 })
 
 
@@ -116,20 +172,45 @@ Mousetrap.bind("ctrl+x", function() {
 });
 
 
+
 let create_module_list = (array) => {
   Object.assign(module_list, array)
 }
 
 
-let create_node = (name, x, y) => {
+
+// CREATE NODE
+
+
+let prepare_to_create_node = (name) => {
+  set_cursor_to_edit_mode()
+  editmode = true  
+  module_node.label = name 
+}
+
+
+let create_node = (x, y) => {
+  //console.log(module_node)
   cy.add({
     group: 'nodes',
-    data: { 'id': counter_id, label: name },
+    data: { id: counter_id, label: module_node.label },
     position: { x: x, y: y }
   })
-  
+
   counter_id += 1
+  editmode = false 
   destroy_module_list()
+  set_cursor_to_default_mode()
+}
+
+
+let set_cursor_to_edit_mode = () => {
+  $('html').css('cursor', 'crosshair')
+}
+
+
+let set_cursor_to_default_mode = () => {
+  $('html').css('cursor', 'default')  
 }
 
 
@@ -142,6 +223,7 @@ let create_edge = (source, target) => {
       target: target
     }
   })
+  set_cursor_to_default_mode()
 }
 
 
