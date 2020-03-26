@@ -84,8 +84,9 @@ cy.cxtmenu({
 
 
 let network_clear = () => {
-  let collection = cy.elements('node');
-  cy.remove( collection );
+  let collection = cy.elements('node')
+  cy.remove( collection )
+  counter_id = 0
 }
 
 
@@ -99,10 +100,16 @@ let network_clear = () => {
 
 cy.on('tap', (event) => {
   let data = event.target 
-  if ((data === cy) && (editmode)) {
-    selected_node_id = null 
-    create_node(event.position.x, event.position.y)
-    //console.log(event.position)
+  if (editmode) {
+    if (data === cy) {
+      selected_node_id = null 
+      create_node(event.position.x, event.position.y)
+    }
+  } else {
+    if (data === cy) {
+      console.log("tap with no edit")
+      selected_node_id = null  
+    }
   }
 })
 
@@ -121,15 +128,15 @@ cy.on('select', 'node', (event) => {
   console.log("select node event")
 
   let id_selected = event.target._private.data.id
-  console.log(id_selected)
   
   cy.$('#' + id_selected).classes('nodeSelectedClass')
-  if (selected_node_id === null) {
+  if (selected_node_id == null) {
     selected_node_id = id_selected
   } else {
-    console.log("create edge?")
-    create_edge(selected_node_id, id_selected)
-    selected_node_id = id_selected 
+    if (selected_node_id !== id_selected) {
+      create_edge(selected_node_id, id_selected)
+      selected_node_id = id_selected 
+    }
   }
   
 })
@@ -138,7 +145,7 @@ cy.on('select', 'node', (event) => {
 // EDGE SELECTION
 
 cy.on('select', 'edge', (event) => {
-  console.log("edge select event", event)
+  console.log("edge select event")
 
   let id_selected = event.target._private.data.id
   console.log(id_selected)
@@ -148,9 +155,16 @@ cy.on('select', 'edge', (event) => {
 
 // UNSELECTION
 
-cy.on('unselect', 'node', (event) => {
+cy.on('unselect', (event) => {
+  //if (event.target === cy)
   console.log("unselect event")
-  //console.log(event)
+})
+
+
+// UNSELECTION SPECIFIC
+
+cy.on('unselect', 'node', (event) => {
+  console.log("unselect node event")
   let n = event.target._private.data.id
   cy.$('#' + n).classes('nodes')
   //selected_node_id = null 
@@ -159,7 +173,6 @@ cy.on('unselect', 'node', (event) => {
 
 cy.on('unselect', 'edge', (event) => {
   console.log("unselect edge event")
-  //console.log(event)
   let n = event.target._private.data.id
   cy.$('#' + n).classes('edges')
   //selected_node_id = null 
@@ -181,7 +194,6 @@ let create_module_list = (array) => {
 
 // CREATE NODE
 
-
 let prepare_to_create_node = (name) => {
   set_cursor_to_edit_mode()
   editmode = true  
@@ -190,7 +202,6 @@ let prepare_to_create_node = (name) => {
 
 
 let create_node = (x, y) => {
-  //console.log(module_node)
   cy.add({
     group: 'nodes',
     data: { id: counter_id, label: module_node.label },
@@ -215,7 +226,7 @@ let set_cursor_to_default_mode = () => {
 
 
 let create_edge = (source, target) => {
-  console.log(source, target)
+  console.log("elements to edge", source, target)
   cy.add({
     group: 'edges',
     data: {
@@ -223,7 +234,7 @@ let create_edge = (source, target) => {
       target: target
     }
   })
-  set_cursor_to_default_mode()
+  //set_cursor_to_default_mode()
 }
 
 
@@ -252,4 +263,18 @@ let set_controller = (pos) => {
       $("<div class='row'><button type='button' onclick='create_node(" + parameters + ")' class='btn btn-block btn-sm'>" + x + "</button></div>")
     )  
   })
+}
+
+
+
+// GET GRAPH
+
+let get_graph = () => {
+
+  let options = {
+    root: "#0"
+  }
+
+  let dfs = cy.elements().dfs(options)
+  console.log(dfs.path)
 }
