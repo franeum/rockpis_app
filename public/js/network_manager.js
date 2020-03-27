@@ -271,10 +271,21 @@ let set_controller = (pos) => {
 
 let get_graph = () => {
 
+  /*
   let options = {
     root: "#0"
   }
 
   let dfs = cy.elements().dfs(options)
   console.log(dfs.path)
+  */
+
+  let root = null;
+
+  cy.nodes().forEach((e) => {
+    console.log(e)
+    if (e._private.data.label === "audioout") root = e.id()
+  });
+  
+  console.log("audioout is:", root)
 }
