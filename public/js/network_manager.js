@@ -3,8 +3,8 @@
 
 let module_list = {}
 let counter_id = 0
-let editmode = false  
-let selected_node_id = null 
+let editmode = false
+let selected_node_id = null
 
 
 
@@ -36,29 +36,28 @@ cy.cxtmenu({
   separatorWidth: 10,
   minSpotlightRadius: 48,
   selector: 'node, edge',
-  commands: [
-    {
+  commands: [{
       content: '<span class="fa fa-flash fa-2x"></span>',
-      select: function(ele){
-        console.log( ele.id() );
+      select: function (ele) {
+        console.log(ele.id());
       }
     },
     {
       content: '<span class="fa fa-star fa-2x"></span>',
-      select: function(ele){
-        console.log( ele.data('name') );
-      }//,
+      select: function (ele) {
+        console.log(ele.data('name'));
+      } //,
       //enabled: false
     },
     {
       content: 'chorus',
-      select: function(ele){
-        console.log( ele.position() );
+      select: function (ele) {
+        console.log(ele.position());
       }
     },
     {
       content: 'sto cazzo',
-      select: function(ele){
+      select: function (ele) {
         //console.log( ele.position() );
         coord = ele.position()
         create_node('tastooma', coord.x + 100, coord.y + 100)
@@ -85,7 +84,7 @@ cy.cxtmenu({
 
 let network_clear = () => {
   let collection = cy.elements('node')
-  cy.remove( collection )
+  cy.remove(collection)
   counter_id = 0
 }
 
@@ -99,16 +98,16 @@ let network_clear = () => {
 // CLICK
 
 cy.on('tap', (event) => {
-  let data = event.target 
+  let data = event.target
   if (editmode) {
     if (data === cy) {
-      selected_node_id = null 
+      selected_node_id = null
       create_node(event.position.x, event.position.y)
     }
   } else {
     if (data === cy) {
       console.log("tap with no edit")
-      selected_node_id = null  
+      selected_node_id = null
     }
   }
 })
@@ -128,17 +127,17 @@ cy.on('select', 'node', (event) => {
   console.log("select node event")
 
   let id_selected = event.target._private.data.id
-  
+
   cy.$('#' + id_selected).classes('nodeSelectedClass')
   if (selected_node_id == null) {
     selected_node_id = id_selected
   } else {
     if (selected_node_id !== id_selected) {
       create_edge(selected_node_id, id_selected)
-      selected_node_id = id_selected 
+      selected_node_id = id_selected
     }
   }
-  
+
 })
 
 
@@ -180,7 +179,7 @@ cy.on('unselect', 'edge', (event) => {
 
 
 
-Mousetrap.bind("ctrl+x", function() { 
+Mousetrap.bind("ctrl+x", function () {
   console.log('show shortcuts X')
 });
 
@@ -196,20 +195,26 @@ let create_module_list = (array) => {
 
 let prepare_to_create_node = (name) => {
   set_cursor_to_edit_mode()
-  editmode = true  
-  module_node.label = name 
+  editmode = true
+  module_node.label = name
 }
 
 
 let create_node = (x, y) => {
   cy.add({
     group: 'nodes',
-    data: { id: counter_id, label: module_node.label },
-    position: { x: x, y: y }
+    data: {
+      id: counter_id,
+      label: module_node.label
+    },
+    position: {
+      x: x,
+      y: y
+    }
   })
 
   counter_id += 1
-  editmode = false 
+  editmode = false
   destroy_module_list()
   set_cursor_to_default_mode()
 }
@@ -221,7 +226,7 @@ let set_cursor_to_edit_mode = () => {
 
 
 let set_cursor_to_default_mode = () => {
-  $('html').css('cursor', 'default')  
+  $('html').css('cursor', 'default')
 }
 
 
@@ -261,7 +266,7 @@ let set_controller = (pos) => {
     let parameters = `"${x}",${pos.x},${pos.y}`
     $("#the-controller").append(
       $("<div class='row'><button type='button' onclick='create_node(" + parameters + ")' class='btn btn-block btn-sm'>" + x + "</button></div>")
-    )  
+    )
   })
 }
 
@@ -286,6 +291,14 @@ let get_graph = () => {
     console.log(e)
     if (e._private.data.label === "audioout") root = e.id()
   });
-  
-  console.log("audioout is:", root)
+
+  //console.log("audioout is:", root)
+
+  let options = {
+    root: '#' + root
+  }
+
+  let dfs = cy.elements().dfs(options)
+  console.log(Object.keys(dfs.path))
+  console.log(dfs.path)
 }
