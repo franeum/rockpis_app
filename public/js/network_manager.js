@@ -3,8 +3,8 @@
 
 let module_list = {}
 let counter_id = 0
-let editmode = false  
-let selected_node_id = null 
+let editmode = false
+let selected_node_id = null
 
 
 
@@ -36,16 +36,15 @@ cy.cxtmenu({
   separatorWidth: 10,
   minSpotlightRadius: 12,
   selector: 'node, edge',
-  commands: [
-    {
+  commands: [{
       content: 'remove',
-      select: function(e){
-        remove_item( e.id() );
+      select: function (e) {
+        remove_item(e.id());
       }
     },
     {
       content: '',
-      select: function(ele){
+      select: function (ele) {
         //console.log( ele.position() );
         coord = ele.position()
       }
@@ -71,7 +70,7 @@ cy.cxtmenu({
 
 let network_clear = () => {
   let collection = cy.elements('node')
-  cy.remove( collection )
+  cy.remove(collection)
   counter_id = 0
 }
 
@@ -85,16 +84,16 @@ let network_clear = () => {
 // CLICK
 
 cy.on('tap', (event) => {
-  let data = event.target 
+  let data = event.target
   if (editmode) {
     if (data === cy) {
-      selected_node_id = null 
+      selected_node_id = null
       create_node(event.position.x, event.position.y)
     }
   } else {
     if (data === cy) {
       console.log("tap with no edit")
-      selected_node_id = null  
+      selected_node_id = null
     }
   }
 })
@@ -114,17 +113,17 @@ cy.on('select', 'node', (event) => {
   console.log("select node event")
 
   let id_selected = event.target._private.data.id
-  
+
   cy.$('#' + id_selected).classes('nodeSelectedClass')
   if (selected_node_id == null) {
     selected_node_id = id_selected
   } else {
     if (selected_node_id !== id_selected) {
       create_edge(selected_node_id, id_selected)
-      selected_node_id = id_selected 
+      selected_node_id = id_selected
     }
   }
-  
+
 })
 
 
@@ -166,7 +165,7 @@ cy.on('unselect', 'edge', (event) => {
 
 
 
-Mousetrap.bind("ctrl+x", function() { 
+Mousetrap.bind("ctrl+x", function () {
   console.log('show shortcuts X')
 });
 
@@ -182,24 +181,28 @@ let create_module_list = (array) => {
 
 let prepare_to_create_node = (name) => {
   set_cursor_to_edit_mode()
-  editmode = true  
-  module_node.label = name 
+  editmode = true
+  module_node.label = name
 }
 
 
 let create_node = (x, y) => {
   cy.add({
     group: 'nodes',
-    data: { 
+    data: {
       type: "module",
-      id: counter_id, 
+      pd_name: "int",
+      id: counter_id,
       label: module_node.label
     },
-    position: { x: x, y: y }
+    position: {
+      x: x,
+      y: y
+    }
   })
 
   counter_id += 1
-  editmode = false 
+  editmode = false
   destroy_module_list()
   set_cursor_to_default_mode()
 }
@@ -211,7 +214,7 @@ let set_cursor_to_edit_mode = () => {
 
 
 let set_cursor_to_default_mode = () => {
-  $('html').css('cursor', 'default')  
+  $('html').css('cursor', 'default')
 }
 
 
@@ -257,7 +260,7 @@ let set_controller = (pos) => {
     let parameters = `"${x}",${pos.x},${pos.y}`
     $("#the-controller").append(
       $("<div class='row'><button type='button' onclick='create_node(" + parameters + ")' class='btn btn-block btn-sm'>" + x + "</button></div>")
-    )  
+    )
   })
 }
 
@@ -270,14 +273,14 @@ let get_graph = () => {
   let root = null
   let nodes = cy.nodes()
 
-  for (let i=0; i<nodes.length; i++) {
+  for (let i = 0; i < nodes.length; i++) {
     if (nodes[i]._private.data.label === "audioout") {
       root = "#" + nodes[i].id()
       break
     }
   }
 
-  for (let i=0; i<nodes.length; i++) {
+  for (let i = 0; i < nodes.length; i++) {
     if (nodes[i]._private.data.label === "audioin") {
       root = "#" + nodes[i].id()
       break
@@ -285,23 +288,64 @@ let get_graph = () => {
   }
 
   let dfs = cy.elements().dfs({
-    root: root 
+    root: root
   })
 
   let content = dfs.path
-
-  write_graph_file(content)
+  //console.log(get_timestamp())
+  write_graph_file(content, build_filename)
 }
 
 
-let write_graph_file = (content) => {
-  let graph = {}
+let write_graph_file = (content, callback) => {
+  let graph = []
 
-  for (let i=0; i<content.length; i++) {
+  for (let i = 0; i < content.length; i++) {
     graph[i] = content[i]._private.data
   }
 
-  let filename = "hello.json";
-  let file = new File([JSON.stringify(graph, null, 4)], filename, {type: "application/json; charset=utf-8"});
+  let filename = callback();
+  console.log(graph)
+  let pd_string = pd_parser(graph)
+
+  /*
+  let file = new File([JSON.stringify(graph, null, 4)], filename, {
+    type: "application/json; charset=utf-8"
+  });
+  */
+
+  let file = new File([pd_string], filename, {
+    type: "text/plain; charset=utf-8"
+  })
   saveAs(file);
+
+}
+
+
+let get_timestamp = () => {
+  let now = new Date()
+  let timestamp = now.getFullYear().toString() +
+    get_month(now) + get_day(now) +
+    now.getHours() + now.getMinutes() + now.getSeconds() +
+    now.getMilliseconds()
+  return timestamp
+}
+
+let get_month = (date) => {
+  let month = date.getMonth() + 1
+  if (month < 10) month = "0" + month.toString()
+  else month = month.toString()
+  return month
+}
+
+let get_day = (date) => {
+  let day = date.getUTCDate()
+  if (day < 10) day = "0" + day.toString()
+  else day = day.toString()
+  return day
+}
+
+let build_filename = () => {
+  let postfix = "_render.pd"
+  return get_timestamp() + postfix
 }
