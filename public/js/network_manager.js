@@ -291,17 +291,6 @@ let get_graph = () => {
   let content = dfs.path
 
   write_graph_file(content)
-  /*
-  let graph = {}
-
-  for (let i=0; i<content.length; i++) {
-    graph[i] = content[i]._private.data
-  }
-
-  let filename = "hello.json";
-  let file = new File([JSON.stringify(graph, null, 4)], filename, {type: "application/json; charset=utf-8"});
-  saveAs(file);
-  */
 }
 
 
