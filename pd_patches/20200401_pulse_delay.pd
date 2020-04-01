@@ -1,0 +1,33 @@
+#N canvas -2 24 1088 720 12;
+#X obj 203 54 bng 40 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 250 198 tabwrite~ \$0-sample;
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array \$0-sample 100 float 2 black black;
+#X coords 0 1 100 -1 200 140 1;
+#X restore 602 84 graph;
+#X obj 359 56 adc~ 1;
+#X obj 221 543 tabread4~ \$0-sample;
+#X obj 221 455 phasor~;
+#X obj 221 484 *~;
+#X obj 221 513 +~;
+#X obj 612 369 samplerate~;
+#X obj 612 279 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X floatatom 221 277 0 0 0 0 frq - -;
+#X text 751 307 lunghezza del segmento;
+#X obj 267 341 samplerate~;
+#X obj 221 306 t f f b;
+#X obj 244 369 *;
+#X connect 0 0 1 0;
+#X connect 3 0 1 0;
+#X connect 5 0 6 0;
+#X connect 6 0 7 0;
+#X connect 7 0 4 0;
+#X connect 9 0 8 0;
+#X connect 10 0 13 0;
+#X connect 12 0 14 1;
+#X connect 13 0 5 0;
+#X connect 13 1 14 0;
+#X connect 13 2 12 0;
+#X connect 14 0 6 1;
