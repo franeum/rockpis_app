@@ -1,5 +1,5 @@
 let pd_patch = ""
-let initString = "#N canvas 800 800 500 400 12;\n"
+let initString = "#N canvas 100 100 600 600 12;\n"
 let init_object = "#X obj "
 let init_connect = "#X connect "
 let end_row = ";\n"
@@ -18,7 +18,9 @@ let pd_parser = (obj) => {
 
 
   modules.forEach((e, idx) => {
-    pd_patch += init_object + `200 ${(idx+1) * 80} ` + e.pd_name + end_row
+    let x = Math.floor(Math.random() * 500)
+    let y = Math.floor(Math.random() * 600);
+    pd_patch += init_object + `${x} ${y} ` + e.pd_name + end_row
   });
 
   connections.forEach(e => {

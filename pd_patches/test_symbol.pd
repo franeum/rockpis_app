@@ -1,0 +1,8 @@
+#N canvas 766 352 450 300 10;
+#X obj 144 90 symbol \$1;
+#X obj 144 51 loadbang;
+#X obj 144 120 list trim;
+#X obj 201 206 print;
+#X connect 0 0 2 0;
+#X connect 1 0 0 0;
+#X connect 2 0 3 0;
