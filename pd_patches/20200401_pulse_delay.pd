@@ -1,23 +1,23 @@
-#N canvas 0 29 1775 965 12;
-#X obj 1079 420 bng 40 250 50 0 empty empty empty 17 7 0 10 -262144
+#N canvas 0 23 1030 832 12;
+#X obj 969 420 bng 40 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 1079 483 tabwrite~ \$0-sample;
-#N canvas 0 0 450 300 (subpatch) 0;
+#X obj 969 483 tabwrite~ \$0-sample;
+#N canvas 0 22 450 300 (subpatch) 0;
 #X array \$0-sample 96000 float 0 black black;
 #X coords 0 1 95999 -1 200 140 1;
-#X restore 1245 21 graph;
-#X obj 1123 441 adc~ 1;
-#X obj 1305 426 samplerate~;
-#X obj 1305 484 array size \$0-sample;
-#X obj 1305 455 * 2;
-#X obj 1305 350 loadbang;
-#X obj 1321 382 bng 35 250 50 0 empty empty empty 17 7 0 10 -262144
+#X restore 1135 21 graph;
+#X obj 1013 441 adc~ 1;
+#X obj 1195 426 samplerate~;
+#X obj 1195 484 array size \$0-sample;
+#X obj 1195 455 * 2;
+#X obj 1195 350 loadbang;
+#X obj 1211 382 bng 35 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X obj 52 720 *~ 1;
 #X obj 160 883 dac~;
 #X obj 254 689 tgl 50 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#N canvas 0 0 450 300 (subpatch) 0;
+#N canvas 0 22 450 300 (subpatch) 0;
 #X array \$0-env 256 float 1 black black;
 #A 0 0 5.14278e-16 1.31577e-13 3.36884e-12 3.36021e-11 1.99918e-10
 8.57727e-10 2.93622e-09 8.51959e-09 2.17848e-08 5.04143e-08 1.07613e-07
@@ -57,20 +57,20 @@
 8.57708e-10 1.99918e-10 3.36004e-11 3.36884e-12 1.31577e-13 5.14278e-16
 ;
 #X coords 0 1 255 0 200 140 1;
-#X restore 1246 188 graph;
-#X obj 1090 85 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
-#X obj 1090 359 tabwrite~ \$0-env;
-#X obj 1113 148 samplerate~;
-#X obj 1113 206 osc~, f 13;
-#X obj 1113 264 +~ 0.5;
-#X msg 1201 149 0;
-#X obj 1090 109 t b b b;
-#X obj 1113 177 / 256;
-#X obj 1113 235 *~ -0.5;
-#X obj 1113 293 *~;
-#X obj 1113 322 *~;
-#X obj 1090 17 loadbang;
+#X restore 1136 188 graph;
+#X obj 980 85 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 980 359 tabwrite~ \$0-env;
+#X obj 1003 148 samplerate~;
+#X obj 1003 206 osc~, f 13;
+#X obj 1003 264 +~ 0.5;
+#X msg 1091 149 0;
+#X obj 980 109 t b b b;
+#X obj 1003 177 / 256;
+#X obj 1003 235 *~ -0.5;
+#X obj 1003 293 *~;
+#X obj 1003 322 *~;
+#X obj 980 17 loadbang;
 #X obj 77 459 rock.inside.pulse_delay_singleton~ 0.125 \$0-sample \$0-env
 , f 24;
 #X obj 108 517 rock.inside.pulse_delay_singleton~ 0.25 \$0-sample \$0-env
@@ -121,6 +121,7 @@
 , f 24;
 #X obj 521 719 *~ 1;
 #X obj 99 268 sig~;
+#X obj 608 190 print;
 #X connect 0 0 1 0;
 #X connect 3 0 1 0;
 #X connect 4 0 6 0;
@@ -155,6 +156,7 @@
 #X connect 32 0 33 0;
 #X connect 33 0 34 0;
 #X connect 34 0 39 0;
+#X connect 35 0 55 0;
 #X connect 35 0 48 0;
 #X connect 35 0 31 0;
 #X connect 35 0 30 0;
@@ -164,7 +166,6 @@
 #X connect 35 0 26 0;
 #X connect 35 0 25 0;
 #X connect 35 0 56 0;
-#X connect 35 0 55 0;
 #X connect 35 0 54 0;
 #X connect 35 0 53 0;
 #X connect 35 0 52 0;
@@ -178,6 +179,7 @@
 #X connect 39 1 40 0;
 #X connect 39 2 38 0;
 #X connect 40 0 41 0;
+#X connect 41 0 55 1;
 #X connect 41 0 48 1;
 #X connect 41 0 31 1;
 #X connect 41 0 30 1;
@@ -187,7 +189,6 @@
 #X connect 41 0 26 1;
 #X connect 41 0 25 1;
 #X connect 41 0 56 1;
-#X connect 41 0 55 1;
 #X connect 41 0 54 1;
 #X connect 41 0 53 1;
 #X connect 41 0 52 1;
@@ -199,6 +200,7 @@
 #X connect 44 0 58 0;
 #X connect 45 0 46 0;
 #X connect 46 0 47 0;
+#X connect 47 0 55 2;
 #X connect 47 0 48 2;
 #X connect 47 0 31 2;
 #X connect 47 0 30 2;
@@ -208,7 +210,6 @@
 #X connect 47 0 26 2;
 #X connect 47 0 25 2;
 #X connect 47 0 56 2;
-#X connect 47 0 55 2;
 #X connect 47 0 54 2;
 #X connect 47 0 53 2;
 #X connect 47 0 52 2;
