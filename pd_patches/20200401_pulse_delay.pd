@@ -1,22 +1,18 @@
-#N canvas 0 23 1030 832 12;
-#X obj 969 420 bng 40 250 50 0 empty empty empty 17 7 0 10 -262144
+#N canvas 604 23 1459 1035 12;
+#X obj 1102 618 bng 40 250 50 0 empty \$0-rec rec -1 -10 0 10 -262144
 -1 -1;
-#X obj 969 483 tabwrite~ \$0-sample;
+#X obj 1102 741 tabwrite~ \$0-sample;
 #N canvas 0 22 450 300 (subpatch) 0;
 #X array \$0-sample 96000 float 0 black black;
 #X coords 0 1 95999 -1 200 140 1;
-#X restore 1135 21 graph;
-#X obj 1013 441 adc~ 1;
-#X obj 1195 426 samplerate~;
-#X obj 1195 484 array size \$0-sample;
-#X obj 1195 455 * 2;
-#X obj 1195 350 loadbang;
-#X obj 1211 382 bng 35 250 50 0 empty empty empty 17 7 0 10 -262144
+#X restore 1135 51 graph;
+#X obj 1195 456 samplerate~;
+#X obj 1195 514 array size \$0-sample;
+#X obj 1195 485 * 2;
+#X obj 1195 380 loadbang;
+#X obj 1211 412 bng 35 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 52 720 *~ 1;
-#X obj 160 883 dac~;
-#X obj 254 689 tgl 50 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
+#X obj 198 917 dac~;
 #N canvas 0 22 450 300 (subpatch) 0;
 #X array \$0-env 256 float 1 black black;
 #A 0 0 5.14278e-16 1.31577e-13 3.36884e-12 3.36021e-11 1.99918e-10
@@ -57,173 +53,223 @@
 8.57708e-10 1.99918e-10 3.36004e-11 3.36884e-12 1.31577e-13 5.14278e-16
 ;
 #X coords 0 1 255 0 200 140 1;
-#X restore 1136 188 graph;
-#X obj 980 85 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X obj 980 359 tabwrite~ \$0-env;
-#X obj 1003 148 samplerate~;
-#X obj 1003 206 osc~, f 13;
-#X obj 1003 264 +~ 0.5;
-#X msg 1091 149 0;
-#X obj 980 109 t b b b;
-#X obj 1003 177 / 256;
-#X obj 1003 235 *~ -0.5;
-#X obj 1003 293 *~;
-#X obj 1003 322 *~;
-#X obj 980 17 loadbang;
-#X obj 77 459 rock.inside.pulse_delay_singleton~ 0.125 \$0-sample \$0-env
+#X restore 1136 218 graph;
+#X obj 980 115 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 980 389 tabwrite~ \$0-env;
+#X obj 1003 178 samplerate~;
+#X obj 1003 236 osc~, f 13;
+#X obj 1003 294 +~ 0.5;
+#X msg 1091 179 0;
+#X obj 980 139 t b b b;
+#X obj 1003 207 / 256;
+#X obj 1003 265 *~ -0.5;
+#X obj 1003 323 *~;
+#X obj 1003 352 *~;
+#X obj 980 47 loadbang;
+#X obj 77 559 rock.inside.pulse_delay_singleton~ 0.125 \$0-sample \$0-env
 , f 24;
-#X obj 108 517 rock.inside.pulse_delay_singleton~ 0.25 \$0-sample \$0-env
+#X obj 108 617 rock.inside.pulse_delay_singleton~ 0.25 \$0-sample \$0-env
 , f 24;
-#X obj 149 575 rock.inside.pulse_delay_singleton~ 0.375 \$0-sample
+#X obj 149 675 rock.inside.pulse_delay_singleton~ 0.375 \$0-sample
 \$0-env, f 24;
-#X obj 245 400 rock.inside.pulse_delay_singleton~ 0.5 \$0-sample \$0-env
+#X obj 245 500 rock.inside.pulse_delay_singleton~ 0.5 \$0-sample \$0-env
 , f 24;
-#X obj 278 456 rock.inside.pulse_delay_singleton~ 0.625 \$0-sample
+#X obj 278 556 rock.inside.pulse_delay_singleton~ 0.625 \$0-sample
 \$0-env, f 24;
-#X obj 310 513 rock.inside.pulse_delay_singleton~ 0.75 \$0-sample \$0-env
+#X obj 310 613 rock.inside.pulse_delay_singleton~ 0.75 \$0-sample \$0-env
 , f 24;
-#X obj 346 573 rock.inside.pulse_delay_singleton~ 0.875 \$0-sample
+#X obj 346 673 rock.inside.pulse_delay_singleton~ 0.875 \$0-sample
 \$0-env, f 24;
-#X floatatom 81 60 0 0 0 0 dur - -;
-#X obj 81 89 / 1000;
-#X floatatom 81 118 5 0 0 0 - - -, f 5;
-#X obj 81 328 phasor~;
-#X floatatom 81 208 0 0 0 0 frq - -;
-#X obj 81 179 rock.reciprocal;
-#X obj 225 176 samplerate~;
-#X obj 81 146 t f f b, f 21;
-#X obj 207 209 *;
-#X floatatom 207 328 5 0 0 0 - - -, f 5;
-#X obj 81 237 sig~;
-#X obj 81 296 *~;
-#X floatatom 161 60 0 -8 8 0 trans - -;
-#X floatatom 316 59 0 0 500 0 trans_ms - -;
-#X obj 316 173 rock.mstosamps;
-#X floatatom 316 330 0 0 24000 0 samp - -;
-#X obj 52 400 rock.inside.pulse_delay_singleton~ 0 \$0-sample \$0-env
+#X floatatom 81 30 0 0 0 0 dur #0-dur -;
+#X floatatom 81 148 5 0 0 0 - - -, f 5;
+#X obj 81 428 phasor~;
+#X floatatom 81 238 0 0 0 0 frq - -;
+#X obj 81 209 rock.reciprocal;
+#X obj 225 206 samplerate~;
+#X obj 81 176 t f f b, f 21;
+#X obj 207 239 *;
+#X floatatom 207 428 5 0 0 0 - - -, f 5;
+#X obj 81 267 sig~;
+#X obj 81 326 *~;
+#X floatatom 161 90 0 -8 8 0 trans #0-trans -;
+#X floatatom 316 63 0 0 1 0 frag_ms #0-frag_ms -;
+#X obj 316 203 rock.mstosamps;
+#X floatatom 316 430 0 0 24000 0 samp - -;
+#X obj 52 500 rock.inside.pulse_delay_singleton~ 0 \$0-sample \$0-env
 , f 24;
-#X obj 545 455 rock.inside.pulse_delay_singleton~ 0.125 \$0-sample
+#X obj 545 555 rock.inside.pulse_delay_singleton~ 0.125 \$0-sample
 \$0-env, f 24;
-#X obj 576 513 rock.inside.pulse_delay_singleton~ 0.25 \$0-sample \$0-env
+#X obj 576 613 rock.inside.pulse_delay_singleton~ 0.25 \$0-sample \$0-env
 , f 24;
-#X obj 617 571 rock.inside.pulse_delay_singleton~ 0.375 \$0-sample
+#X obj 617 671 rock.inside.pulse_delay_singleton~ 0.375 \$0-sample
 \$0-env, f 24;
-#X obj 713 396 rock.inside.pulse_delay_singleton~ 0.5 \$0-sample \$0-env
+#X obj 713 496 rock.inside.pulse_delay_singleton~ 0.5 \$0-sample \$0-env
 , f 24;
-#X obj 746 452 rock.inside.pulse_delay_singleton~ 0.625 \$0-sample
+#X obj 746 552 rock.inside.pulse_delay_singleton~ 0.625 \$0-sample
 \$0-env, f 24;
-#X obj 778 509 rock.inside.pulse_delay_singleton~ 0.75 \$0-sample \$0-env
+#X obj 778 609 rock.inside.pulse_delay_singleton~ 0.75 \$0-sample \$0-env
 , f 24;
-#X obj 814 569 rock.inside.pulse_delay_singleton~ 0.875 \$0-sample
+#X obj 814 669 rock.inside.pulse_delay_singleton~ 0.875 \$0-sample
 \$0-env, f 24;
-#X obj 520 396 rock.inside.pulse_delay_singleton~ 0 \$0-sample \$0-env
+#X obj 520 496 rock.inside.pulse_delay_singleton~ 0 \$0-sample \$0-env
 , f 24;
-#X obj 521 719 *~ 1;
-#X obj 99 268 sig~;
-#X obj 608 190 print;
+#X obj 161 298 sig~;
+#X obj 1259 901 dac~;
+#X obj 1259 840 *~;
+#X obj 1277 643 vsl 15 128 0 1 0 0 empty \$0-dry dry 0 -9 0 10 -262144
+-1 -1 0 1;
+#X msg 1277 785 \$1 25;
+#X obj 1277 814 line~;
+#X obj 662 815 vsl 15 128 0 1 0 0 empty \$0-wet wet 0 -9 0 10 -262144
+-1 -1 0 1;
+#X msg 662 957 \$1 25;
+#X obj 662 986 line~;
+#X obj 521 819 *~;
+#X obj 52 820 *~;
+#X obj 588 197 vsl 25 128 0 1 0 0 empty \$0-wet wet 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 555 197 vsl 25 128 0 1 0 0 empty \$0-dry dry -1 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 653 27 rock.netrcv_module 8001 pulse_delay;
+#X obj 1259 583 inlet~;
+#X obj 653 56 route rec dur trans frag_ms dry wet;
+#X obj 693 111 s \$0-dur;
+#X obj 653 85 s \$0-rec;
+#X obj 733 135 s \$0-trans;
+#X obj 774 85 s \$0-frag_ms;
+#X obj 814 111 s \$0-dry;
+#X obj 854 135 s \$0-wet;
+#X obj 316 147 rock.scale 0 1 0 500;
+#X floatatom 361 330 5 0 0 0 - - -, f 5;
+#X obj 161 119 rock.scale 0 1 -7 9;
+#X floatatom 345 251 5 0 0 0 - - -, f 5;
+#X obj 690 346 oscparse;
+#X obj 690 375 print;
+#X obj 690 317 netreceive -u -b 7000;
 #X connect 0 0 1 0;
-#X connect 3 0 1 0;
-#X connect 4 0 6 0;
-#X connect 6 0 5 0;
-#X connect 7 0 4 0;
-#X connect 8 0 4 0;
-#X connect 9 0 10 0;
-#X connect 11 0 9 1;
-#X connect 11 0 57 1;
-#X connect 13 0 19 0;
-#X connect 15 0 20 0;
-#X connect 16 0 21 0;
-#X connect 17 0 22 0;
-#X connect 17 0 22 1;
-#X connect 18 0 16 1;
-#X connect 19 0 14 0;
-#X connect 19 1 15 0;
-#X connect 19 2 18 0;
-#X connect 20 0 16 0;
-#X connect 21 0 17 0;
-#X connect 22 0 23 0;
-#X connect 22 0 23 1;
-#X connect 23 0 14 0;
-#X connect 24 0 13 0;
-#X connect 25 0 9 0;
-#X connect 26 0 9 0;
-#X connect 27 0 9 0;
-#X connect 28 0 9 0;
-#X connect 29 0 9 0;
-#X connect 30 0 9 0;
-#X connect 31 0 9 0;
-#X connect 32 0 33 0;
-#X connect 33 0 34 0;
-#X connect 34 0 39 0;
-#X connect 35 0 55 0;
-#X connect 35 0 48 0;
-#X connect 35 0 31 0;
-#X connect 35 0 30 0;
-#X connect 35 0 29 0;
-#X connect 35 0 28 0;
-#X connect 35 0 27 0;
-#X connect 35 0 26 0;
-#X connect 35 0 25 0;
-#X connect 35 0 56 0;
-#X connect 35 0 54 0;
-#X connect 35 0 53 0;
-#X connect 35 0 52 0;
-#X connect 35 0 51 0;
-#X connect 35 0 50 0;
-#X connect 35 0 49 0;
-#X connect 36 0 42 0;
-#X connect 37 0 36 0;
-#X connect 38 0 40 1;
-#X connect 39 0 37 0;
-#X connect 39 1 40 0;
-#X connect 39 2 38 0;
-#X connect 40 0 41 0;
-#X connect 41 0 55 1;
-#X connect 41 0 48 1;
-#X connect 41 0 31 1;
-#X connect 41 0 30 1;
-#X connect 41 0 29 1;
-#X connect 41 0 28 1;
-#X connect 41 0 27 1;
-#X connect 41 0 26 1;
-#X connect 41 0 25 1;
-#X connect 41 0 56 1;
-#X connect 41 0 54 1;
-#X connect 41 0 53 1;
-#X connect 41 0 52 1;
-#X connect 41 0 51 1;
-#X connect 41 0 50 1;
-#X connect 41 0 49 1;
+#X connect 3 0 5 0;
+#X connect 5 0 4 0;
+#X connect 6 0 3 0;
+#X connect 7 0 3 0;
+#X connect 10 0 16 0;
+#X connect 12 0 17 0;
+#X connect 13 0 18 0;
+#X connect 14 0 19 0;
+#X connect 14 0 19 1;
+#X connect 15 0 13 1;
+#X connect 16 0 11 0;
+#X connect 16 1 12 0;
+#X connect 16 2 15 0;
+#X connect 17 0 13 0;
+#X connect 18 0 14 0;
+#X connect 19 0 20 0;
+#X connect 19 0 20 1;
+#X connect 20 0 11 0;
+#X connect 21 0 10 0;
+#X connect 22 0 63 0;
+#X connect 23 0 63 0;
+#X connect 24 0 63 0;
+#X connect 25 0 63 0;
+#X connect 26 0 63 0;
+#X connect 27 0 63 0;
+#X connect 28 0 63 0;
+#X connect 29 0 30 0;
+#X connect 30 0 35 0;
+#X connect 31 0 51 0;
+#X connect 31 0 44 0;
+#X connect 31 0 28 0;
+#X connect 31 0 27 0;
+#X connect 31 0 26 0;
+#X connect 31 0 25 0;
+#X connect 31 0 24 0;
+#X connect 31 0 23 0;
+#X connect 31 0 22 0;
+#X connect 31 0 52 0;
+#X connect 31 0 50 0;
+#X connect 31 0 49 0;
+#X connect 31 0 48 0;
+#X connect 31 0 47 0;
+#X connect 31 0 46 0;
+#X connect 31 0 45 0;
+#X connect 32 0 38 0;
+#X connect 33 0 32 0;
+#X connect 34 0 36 1;
+#X connect 35 0 33 0;
+#X connect 35 1 36 0;
+#X connect 35 2 34 0;
+#X connect 36 0 37 0;
+#X connect 37 0 51 1;
+#X connect 37 0 44 1;
+#X connect 37 0 28 1;
+#X connect 37 0 27 1;
+#X connect 37 0 26 1;
+#X connect 37 0 25 1;
+#X connect 37 0 24 1;
+#X connect 37 0 23 1;
+#X connect 37 0 22 1;
+#X connect 37 0 52 1;
+#X connect 37 0 50 1;
+#X connect 37 0 49 1;
+#X connect 37 0 48 1;
+#X connect 37 0 47 1;
+#X connect 37 0 46 1;
+#X connect 37 0 45 1;
+#X connect 38 0 39 0;
+#X connect 39 0 31 0;
+#X connect 40 0 77 0;
+#X connect 41 0 75 0;
 #X connect 42 0 43 0;
-#X connect 43 0 35 0;
-#X connect 44 0 58 0;
-#X connect 45 0 46 0;
-#X connect 46 0 47 0;
-#X connect 47 0 55 2;
-#X connect 47 0 48 2;
-#X connect 47 0 31 2;
-#X connect 47 0 30 2;
-#X connect 47 0 29 2;
-#X connect 47 0 28 2;
-#X connect 47 0 27 2;
-#X connect 47 0 26 2;
-#X connect 47 0 25 2;
-#X connect 47 0 56 2;
-#X connect 47 0 54 2;
-#X connect 47 0 53 2;
-#X connect 47 0 52 2;
-#X connect 47 0 51 2;
-#X connect 47 0 50 2;
-#X connect 47 0 49 2;
-#X connect 48 0 9 0;
-#X connect 49 0 57 0;
-#X connect 50 0 57 0;
-#X connect 51 0 57 0;
-#X connect 52 0 57 0;
-#X connect 53 0 57 0;
-#X connect 54 0 57 0;
-#X connect 55 0 57 0;
+#X connect 42 0 78 0;
+#X connect 43 0 51 2;
+#X connect 43 0 44 2;
+#X connect 43 0 28 2;
+#X connect 43 0 27 2;
+#X connect 43 0 26 2;
+#X connect 43 0 25 2;
+#X connect 43 0 24 2;
+#X connect 43 0 23 2;
+#X connect 43 0 22 2;
+#X connect 43 0 52 2;
+#X connect 43 0 50 2;
+#X connect 43 0 49 2;
+#X connect 43 0 48 2;
+#X connect 43 0 47 2;
+#X connect 43 0 46 2;
+#X connect 43 0 45 2;
+#X connect 44 0 63 0;
+#X connect 45 0 62 0;
+#X connect 46 0 62 0;
+#X connect 47 0 62 0;
+#X connect 48 0 62 0;
+#X connect 49 0 62 0;
+#X connect 50 0 62 0;
+#X connect 51 0 62 0;
+#X connect 52 0 62 0;
+#X connect 53 0 39 1;
+#X connect 55 0 54 0;
+#X connect 55 0 54 1;
 #X connect 56 0 57 0;
-#X connect 57 0 10 1;
-#X connect 58 0 43 1;
+#X connect 57 0 58 0;
+#X connect 58 0 55 1;
+#X connect 59 0 60 0;
+#X connect 60 0 61 0;
+#X connect 61 0 62 1;
+#X connect 61 0 63 1;
+#X connect 62 0 8 1;
+#X connect 63 0 8 0;
+#X connect 66 0 68 0;
+#X connect 67 0 1 0;
+#X connect 67 0 55 0;
+#X connect 68 0 70 0;
+#X connect 68 1 69 0;
+#X connect 68 2 71 0;
+#X connect 68 3 72 0;
+#X connect 68 4 73 0;
+#X connect 68 5 74 0;
+#X connect 75 0 42 0;
+#X connect 77 0 53 0;
+#X connect 77 0 76 0;
+#X connect 79 0 80 0;
+#X connect 81 0 79 0;
+#X coords 0 0 1 1 248 114 0;
